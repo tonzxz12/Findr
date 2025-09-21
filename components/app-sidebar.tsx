@@ -76,7 +76,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname()
   const [projects, setProjects] = React.useState<any[]>([])
   const [loading, setLoading] = React.useState(true)
-  const { setOpen } = useSidebar()
+  const [showUnreadsOnly, setShowUnreadsOnly] = React.useState(false)
+  const { open, setOpen } = useSidebar()
 
   // Fetch projects from dashboard API
   React.useEffect(() => {
@@ -95,7 +96,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             day: 'numeric',
             year: 'numeric'
           }),
-          status: 'open' // Default status for recent projects
+          status: 'open', // Default status for recent projects
+          unread: Math.random() > 0.5 // Random unread status for demo
         }))
         setProjects(transformedProjects)
       } catch (error) {
@@ -112,21 +114,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     router.push(url)
   }
 
-  // Check if we're on a specific project page (project/[id])
-  const isOnProjectDetail = pathname.startsWith('/project/') && pathname !== '/dashboard/client/projects'
+  // Check if we're on a specific project page (dashboard/client/projects/[id])
+  const isOnProjectDetail = pathname.startsWith('/dashboard/client/projects/') && pathname !== '/dashboard/client/projects'
   // Check if we're on the projects list page
   const isOnProjectsList = pathname === '/dashboard/client/projects'
   // Extract project ID from pathname if on project detail page
   const activeProjectId = isOnProjectDetail ? pathname.split('/').pop() : null
 
-  // Control sidebar collapsed state based on route
+  // Control sidebar collapsed state based on route - collapse on projects list page, open on project detail pages
   React.useEffect(() => {
     if (isOnProjectsList) {
       setOpen(false) // Collapse sidebar to icon-only on projects list
-    } else {
-      setOpen(true) // Expand sidebar on other pages
+    } else if (isOnProjectDetail) {
+      setOpen(true) // Open sidebar to show projects on project detail pages
     }
-  }, [isOnProjectsList, setOpen])
+  }, [isOnProjectsList, isOnProjectDetail, setOpen])
 
   return (
     <Sidebar
@@ -198,7 +200,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       {/* This is the second sidebar */}
       {/* Show when sidebar is expanded */}
-      {!isOnProjectsList && (
+      {open && (
         <Sidebar collapsible="none" className="flex-1 md:flex overflow-x-hidden">
           <SidebarHeader className="gap-3.5 border-b p-4">
             <div className="flex w-full items-center justify-between">
@@ -207,7 +209,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </div>
               <Label className="flex items-center gap-2 text-sm">
                 <span>Unreads</span>
-                <Switch className="shadow-none" />
+                <Switch 
+                  className="shadow-none" 
+                  checked={showUnreadsOnly}
+                  onCheckedChange={setShowUnreadsOnly}
+                />
               </Label>
             </div>
             <SidebarInput placeholder="Search Projects" />
@@ -215,26 +221,33 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarContent>
             <SidebarGroup className="px-0">
               <SidebarGroupContent>
-                {projects.map((project) => (
-                  <Link
-                    href={`/project/${project.id}`}
-                    key={project.title}
-                    className={`flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0 ${
-                      activeProjectId === project.id.toString()
-                        ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-                        : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
-                    }`}
-                  >
-                    <div className="flex w-full items-center gap-2">
-                      <span className="font-medium truncate flex-1 min-w-0">{project.title}</span>{" "}
-                      <span className="ml-auto text-xs shrink-0">{project.budgetAbc}</span>
+              {(showUnreadsOnly ? projects.filter(project => project.unread) : projects).map((project) => (
+                <Link
+                  href={`/dashboard/client/projects/${project.id}`}
+                  key={project.title}
+                  className={`flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0 relative ${
+                    activeProjectId === project.id.toString()
+                      ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                      : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                  }`}
+                >
+                  <div className="flex w-full items-center gap-2">
+                    <span className="font-medium truncate flex-1 min-w-0">{project.title}</span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      {project.unread && (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
+                          unread
+                        </span>
+                      )}
+                      <span className="text-xs">{project.budgetAbc}</span>
                     </div>
-                    <span className="text-muted-foreground">{project.procuringEntity}</span>
-                    <span className="line-clamp-2 w-[260px] text-xs">
-                      Deadline: {project.submissionDeadline} • Status: {project.status}
-                    </span>
-                  </Link>
-                ))}
+                  </div>
+                  <span className="text-muted-foreground">{project.procuringEntity}</span>
+                  <span className="line-clamp-2 w-[260px] text-xs">
+                    Deadline: {project.submissionDeadline} • Status: {project.status}
+                  </span>
+                </Link>
+              ))}
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>

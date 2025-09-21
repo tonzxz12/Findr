@@ -1,6 +1,7 @@
 "use client"
 
 import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -48,153 +49,73 @@ import { OverviewTab } from "./components/overview-tab"
 import { DocumentsTab } from "./components/documents-tab"
 import { TimelineTab } from "./components/timeline-tab"
 import { ContactTab } from "./components/contact-tab"
-// Enhanced mock project data
-const getProjectById = (id: string) => {
-  const projects = {
-    "PROJ-2814": {
-      id: "PROJ-2814",
-      projectId: "25-09-156",
-      refId: "REF-2024-001",
-      title: "Construction of Science and Technology Building Phase II",
-      url: "https://philgeps.gov.ph/project/25-09-156",
-      procuringEntity: "Department of Science and Technology",
-      procuringEntityDetails: {
-        contactPerson: "Eng. Roberto Cruz",
-        email: "procurement@dost.gov.ph",
-        phone: "+63 2 8837-2071",
-        address: "DOST Compound, General Santos Avenue, Bicutan, Taguig City"
-      },
-      areaOfDelivery: "Taguig City, Metro Manila",
-      latitude: 14.5995,
-      longitude: 120.9842,
-      procurementSummary: "The project involves the construction of a modern Science and Technology Building Phase II, including laboratory facilities, research spaces, administrative offices, and supporting infrastructure. The building will be a 5-story structure with basement parking and will house state-of-the-art equipment for various scientific research activities.",
-      referenceNumber: "2024-BAC-001-25-09-156",
-      solicitationNumber: "SOL-2024-156-DOST-001",
-      tradeAgreement: "Philippines-Singapore Free Trade Agreement",
-      procurementMode: "Public Bidding",
-      classification: "Infrastructure",
-      category: "Building Construction",
-      abc: "75500000.00",
-      deliveryPeriod: "18 months",
-      description: "This project aims to construct a state-of-the-art Science and Technology Building to support the Department of Science and Technology's research initiatives. The facility will include advanced laboratories, research spaces, conference rooms, and administrative offices designed to foster innovation and collaboration in scientific research.",
-      publishAt: new Date("2024-12-18T08:00:00Z"),
-      closingAt: new Date("2024-02-15T17:00:00Z"),
-      parsedClosingAt: new Date("2024-02-15T17:00:00Z"),
-      datePublished: new Date("2024-12-18T08:00:00Z"),
-      lastUpdatedAt: new Date("2024-12-19T14:30:00Z"),
-      status: "open",
-      budgetAbc: "₱75,500,000.00",
-      projectDuration: "18 months",
-      submissionDeadline: "February 15, 2024",
-      deadline: "2024-02-15T17:00:00Z",
-      bidOpeningDate: "February 20, 2024",
-      fundSource: "General Fund",
-      deliveryTerms: "FOB Destination",
-      paymentTerms: "Progressive billing based on accomplished work",
-      documents: [
-        { name: "Bidding Documents", type: "PDF", size: "2.5 MB", downloadUrl: "https://drive.google.com/file/d/18__JoGMLbbz0uzq-Fw4hp1yzY4wgsX7A/view?usp=drive_link" },
-        { name: "Technical Specifications", type: "PDF", size: "1.8 MB", downloadUrl: "https://drive.google.com/file/d/18__JoGMLbbz0uzq-Fw4hp1yzY4wgsX7A/view?usp=drive_link" },
-        { name: "Bill of Quantities", type: "XLSX", size: "0.5 MB", downloadUrl: "https://drive.google.com/file/d/18__JoGMLbbz0uzq-Fw4hp1yzY4wgsX7A/view?usp=drive_link" },
-        { name: "Site Plan", type: "DWG", size: "3.2 MB", downloadUrl: "https://drive.google.com/file/d/18__JoGMLbbz0uzq-Fw4hp1yzY4wgsX7A/view?usp=drive_link" }
-      ],
-      timeline: [
-        { date: "2024-01-15", event: "Bidding documents posted", status: "completed" },
-        { date: "2024-01-25", event: "Pre-bid conference", status: "completed" },
-        { date: "2024-02-10", event: "Bid submission deadline", status: "upcoming" },
-        { date: "2024-02-15", event: "Bid opening", status: "upcoming" },
-        { date: "2024-02-20", event: "Post qualification", status: "upcoming" },
-        { date: "2024-02-25", event: "Contract award", status: "upcoming" },
-        { date: "2025-09-01", event: "Contract signing ceremony", status: "completed" },
-        { date: "2025-09-10", event: "Mobilization and site preparation", status: "completed" },
-        { date: "2025-09-18", event: "Foundation work begins", status: "in-progress" },
-        { date: "2025-09-25", event: "First progress inspection", status: "upcoming" },
-        { date: "2025-10-01", event: "Structural framework completion target", status: "upcoming" },
-        { date: "2025-12-15", event: "Building envelope completion", status: "upcoming" }
-      ],
-      createdAt: "2024-12-18T08:00:00Z",
-      updatedAt: "2024-12-19T14:30:00Z",
-    
-      contacts: [
-        {
-          name: "Eng. Roberto Cruz",
-          position: "Procurement Officer",
-          department: "Procurement Division",
-          phone: "+63 2 8837-2071",
-          email: "procurement@dost.gov.ph",
-          address: "DOST Compound, General Santos Avenue, Bicutan, Taguig City"
-        },
-        {
-          name: "Ms. Maria Santos",
-          position: "Technical Evaluator",
-          department: "Engineering Division",
-          phone: "+63 2 8837-2072",
-          email: "technical@dost.gov.ph"
-        }
-      ]
-    },
-    "PROJ-0276": {
-      id: "PROJ-0276",
-      projectId: "25-09-156",
-      refId: "REF-2024-002",
-      title: "Supply of Office Equipment for Digital Transformation",
-      url: "https://philgeps.gov.ph/project/25-09-156",
-      procuringEntity: "Department of Education - Central Office",
-      procuringEntityDetails: {
-        contactPerson: "Ms. Jennifer Cruz",
-        email: "procurement@deped.gov.ph",
-        phone: "+63 2 8636-1663",
-        address: "DepEd Complex, Meralco Avenue, Pasig City"
-      },
-      areaOfDelivery: "Quezon City, Metro Manila",
-      procurementSummary: "Supply and delivery of office equipment including desktop computers, laptops, printers, scanners, and office furniture to support the digital transformation initiative of the Department of Education.",
-      referenceNumber: "2024-BAC-002-25-09-156",
-      solicitationNumber: "SOL-2024-156-DEPED-002",
-      tradeAgreement: "Philippines-Japan Economic Partnership Agreement",
-      category: "Office Equipment & Supplies",
-      abc: "25750000.00",
-      description: "This procurement aims to equip DepEd offices with modern digital tools and furniture to enhance administrative efficiency and support the department's digital transformation goals. The equipment will be distributed across regional offices and central administrative units.",
-      publishAt: new Date("2024-12-19T10:15:00Z"),
-      closingAt: new Date("2024-01-30T17:00:00Z"),
-      parsedClosingAt: new Date("2024-01-30T17:00:00Z"),
-      datePublished: new Date("2024-12-19T10:15:00Z"),
-      lastUpdatedAt: new Date("2024-12-20T16:45:00Z"),
-      status: "processing",
-      classification: "Goods",
-      budgetAbc: "₱25,750,000.00",
-      projectDuration: "60 days",
-      submissionDeadline: "January 30, 2024",
-      deadline: "2024-01-30T17:00:00Z",
-      bidOpeningDate: "February 5, 2024",
-      procurementMode: "Public Bidding",
-      fundSource: "Special Fund",
-      deliveryTerms: "FOB Destination with Installation",
-      paymentTerms: "Payment upon complete delivery and acceptance",
-      documents: [
-        { name: "Technical Specifications", type: "PDF", size: "1.2 MB", downloadUrl: "https://drive.google.com/file/d/18__JoGMLbbz0uzq-Fw4hp1yzY4wgsX7A/view?usp=drive_link" },
-        { name: "Budget Breakdown", type: "XLSX", size: "0.8 MB", downloadUrl: "https://drive.google.com/file/d/18__JoGMLbbz0uzq-Fw4hp1yzY4wgsX7A/view?usp=drive_link" },
-        { name: "Terms of Reference", type: "DOCX", size: "0.5 MB", downloadUrl: "https://drive.google.com/file/d/18__JoGMLbbz0uzq-Fw4hp1yzY4wgsX7A/view?usp=drive_link" }
-      ],
-      timeline: [
-        { date: "2024-01-10", event: "Bidding documents posted", status: "completed" },
-        { date: "2024-01-20", event: "Pre-bid conference", status: "upcoming" },
-        { date: "2024-01-30", event: "Bid submission deadline", status: "upcoming" },
-        { date: "2024-02-05", event: "Bid opening", status: "upcoming" },
-        { date: "2025-09-02", event: "Contract awarded to winning bidder", status: "completed" },
-        { date: "2025-09-08", event: "Purchase order issuance", status: "completed" },
-        { date: "2025-09-15", event: "Equipment procurement and manufacturing", status: "in-progress" },
-        { date: "2025-09-22", event: "Quality inspection and testing", status: "upcoming" },
-        { date: "2025-09-28", event: "Delivery to DepEd central office", status: "upcoming" },
-        { date: "2025-10-05", event: "Installation and setup", status: "upcoming" },
-        { date: "2025-10-12", event: "Training and handover", status: "upcoming" }
-      ],
-      createdAt: "2024-12-19T10:15:00Z",
-      updatedAt: "2024-12-20T16:45:00Z",
-      aiConfidenceScore: 92,
-      processingMethod: "Advanced AI Matching"
-    }
-  }
 
-  return projects[id as keyof typeof projects] || null
+interface Project {
+  id: number
+  title: string
+  procuringEntity: string
+  abc: number
+  parsedClosingAt: string
+  category: string
+  createdAt: string
+}
+
+interface EnhancedProject extends Project {
+  projectId: string
+  refId: string
+  url: string
+  procuringEntityDetails: {
+    contactPerson: string
+    email: string
+    phone: string
+    address: string
+  }
+  areaOfDelivery: string
+  latitude: number
+  longitude: number
+  procurementSummary: string
+  referenceNumber: string
+  solicitationNumber: string
+  tradeAgreement: string
+  procurementMode: string
+  classification: string
+  deliveryPeriod: string
+  description: string
+  publishAt: Date
+  closingAt: Date
+  datePublished: Date
+  lastUpdatedAt: Date
+  status: string
+  budgetAbc: string
+  projectDuration: string
+  submissionDeadline: string
+  deadline: string
+  bidOpeningDate: string
+  fundSource: string
+  deliveryTerms: string
+  paymentTerms: string
+  documents: Array<{
+    name: string
+    type: string
+    size: string
+    downloadUrl: string
+  }>
+  timeline: Array<{
+    date: string
+    event: string
+    status: string
+  }>
+  requirements: string[]
+  evaluationCriteria: Array<{
+    criterion: string
+    weight: number
+  }>
+  similarProjects: any[]
+  aiInsights: {
+    riskLevel: string
+    recommendations: string[]
+    marketAnalysis: string
+  }
 }
 
 const getStatusColor = (status: string) => {
@@ -221,20 +142,170 @@ const getStatusIcon = (status: string) => {
 
 export default function ProjectDetailPage() {
   const params = useParams()
-  const project = getProjectById(params.id as string)
+  const projectId = params.id as string
+  const [project, setProject] = useState<Project | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  if (!project) {
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        setLoading(true)
+        // Fetch all projects from the dashboard API
+        const response = await fetch('/api/dashboard')
+        const data = await response.json()
+
+        // Find the project by ID
+        const foundProject = data.recentProjects.find((p: Project) => p.id.toString() === projectId)
+
+        if (foundProject) {
+          setProject(foundProject)
+        } else {
+          setError('Project not found')
+        }
+      } catch (err) {
+        console.error('Error fetching project:', err)
+        setError('Failed to load project')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (projectId) {
+      fetchProject()
+    }
+  }, [projectId])
+
+  if (loading) {
     return (
-      <div className="flex flex-1 flex-col gap-6 p-6">
-        <div className="flex items-center justify-center h-96">
-          <div className="text-center">
-            <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h2 className="text-2xl font-semibold mb-2">Project Not Found</h2>
-            <p className="text-muted-foreground">The requested project could not be found.</p>
-          </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading project details...</p>
         </div>
       </div>
     )
+  }
+
+  if (error || !project) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
+          <h1 className="text-2xl font-bold mb-2">Project Not Found</h1>
+          <p className="text-muted-foreground mb-4">The requested project could not be found.</p>
+          <Button onClick={() => window.history.back()}>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Go Back
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  // Enhanced project data with additional fields for the detail view
+  const enhancedProject = {
+    ...project,
+    id: project.id.toString(), // Convert to string for tab components
+    projectId: `PROJ-${project.id}`,
+    refId: `REF-2024-${project.id.toString().padStart(3, '0')}`,
+    url: `https://philgeps.gov.ph/project/${project.id}`,
+    procuringEntityDetails: {
+      contactPerson: "Procurement Officer",
+      email: "procurement@gov.ph",
+      phone: "+63 2 123-4567",
+      address: "Government Office, Manila"
+    },
+    areaOfDelivery: "Nationwide",
+    latitude: 14.5995,
+    longitude: 120.9842,
+    procurementSummary: project.title,
+    referenceNumber: `2024-BAC-${project.id.toString().padStart(3, '0')}`,
+    solicitationNumber: `SOL-2024-${project.id}`,
+    tradeAgreement: "GPPB",
+    procurementMode: "Public Bidding",
+    classification: project.category === "Construction" ? "Infrastructure" : "Goods",
+    deliveryPeriod: "30 days",
+    description: project.title,
+    publishAt: new Date(project.createdAt),
+    closingAt: new Date(project.parsedClosingAt),
+    parsedClosingAt: new Date(project.parsedClosingAt),
+    datePublished: new Date(project.createdAt),
+    lastUpdatedAt: new Date(project.createdAt),
+    status: new Date(project.parsedClosingAt) > new Date() ? "open" : "closed",
+    budgetAbc: `₱${project.abc.toLocaleString()}`,
+    abc: project.abc.toString(), // Convert to string for tab components
+    projectDuration: "30 days",
+    submissionDeadline: new Date(project.parsedClosingAt).toLocaleDateString(),
+    deadline: project.parsedClosingAt,
+    bidOpeningDate: new Date(project.parsedClosingAt).toLocaleDateString(),
+    fundSource: "General Fund",
+    deliveryTerms: "FOB Destination",
+    paymentTerms: "Net 30 days",
+    updatedAt: project.createdAt,
+    documents: [
+      { name: "Bidding Documents", type: "PDF", size: "2.5 MB", downloadUrl: "https://drive.google.com/file/d/19Lo0xJ2iUhH3N5vFgQXSw6pOYe5vY4Ap/view?usp=sharing" },
+      { name: "Technical Specifications", type: "PDF", size: "1.8 MB", downloadUrl: "https://drive.google.com/file/d/19Lo0xJ2iUhH3N5vFgQXSw6pOYe5vY4Ap/view?usp=sharing" },
+      { name: "Bill of Quantities", type: "XLSX", size: "0.5 MB", downloadUrl: "https://drive.google.com/file/d/19Lo0xJ2iUhH3N5vFgQXSw6pOYe5vY4Ap/view?usp=sharing" }
+    ],
+    timeline: (() => {
+      const events = [
+        { date: project.createdAt.split('T')[0], event: "Project published", status: "completed" }
+      ]
+
+      // Generate 2-4 random events in September 2025
+      const numEvents = Math.floor(Math.random() * 3) + 2 // 2-4 events
+      const eventTypes = [
+        "Pre-bid conference",
+        "Technical evaluation",
+        "Financial evaluation",
+        "Post-qualification",
+        "Contract award",
+        "Mobilization",
+        "Site preparation",
+        "Progress inspection"
+      ]
+
+      for (let i = 0; i < numEvents; i++) {
+        // Generate random date in September 2025 (1-30)
+        const day = Math.floor(Math.random() * 30) + 1
+        const dateString = `2025-09-${day.toString().padStart(2, '0')}`
+
+        // Random event type
+        const eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)]
+
+        // Random status
+        const statuses = ["completed", "in-progress", "upcoming"]
+        const status = statuses[Math.floor(Math.random() * statuses.length)]
+
+        events.push({ date: dateString, event: eventType, status })
+      }
+
+      events.push({ date: project.parsedClosingAt.split('T')[0], event: "Bid closing", status: "pending" })
+
+      // Sort by date
+      return events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    })(),
+    requirements: [
+      "Valid business license",
+      "Tax clearance certificate",
+      "Proof of technical capability",
+      "Financial statements"
+    ],
+    evaluationCriteria: [
+      { criterion: "Technical Proposal", weight: 40 },
+      { criterion: "Financial Proposal", weight: 60 }
+    ],
+    similarProjects: [],
+    aiInsights: {
+      riskLevel: "Low",
+      recommendations: [
+        "Ensure all documentation is complete",
+        "Consider partnering with local firms",
+        "Monitor bid closing date carefully"
+      ],
+      marketAnalysis: "Competitive market with multiple qualified bidders expected"
+    }
   }
 
   return (
@@ -260,7 +331,7 @@ export default function ProjectDetailPage() {
           
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="outline" size="sm" asChild>
-              <a href={project.url} target="_blank" rel="noopener noreferrer">
+              <a href={enhancedProject.url} target="_blank" rel="noopener noreferrer">
                 <Globe className="h-4 w-4 mr-2" />
                 View on PhilGEPS
               </a>
@@ -284,16 +355,16 @@ export default function ProjectDetailPage() {
             <div className="space-y-4 flex-1">
               <div className="flex items-center gap-3 flex-wrap">
                 <Badge variant="secondary">
-                  {getStatusIcon(project.status)}
-                  <span className="ml-1 capitalize">{project.status}</span>
+                  {getStatusIcon(enhancedProject.status)}
+                  <span className="ml-1 capitalize">{enhancedProject.status}</span>
                 </Badge>
                 <Badge variant="outline">
                   <Building2 className="h-3 w-3 mr-1" />
-                  {project.projectId}
+                  {enhancedProject.projectId}
                 </Badge>
                 <Badge variant="outline">
                   <Briefcase className="h-3 w-3 mr-1" />
-                  {project.classification}
+                  {enhancedProject.classification}
                 </Badge>
               </div>
               
@@ -302,7 +373,7 @@ export default function ProjectDetailPage() {
               </h1>
               
               <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
-                {project.procurementSummary}
+                {enhancedProject.procurementSummary}
               </p>
               
               <div className="flex items-center gap-2 text-muted-foreground">
@@ -314,22 +385,22 @@ export default function ProjectDetailPage() {
             <div className="lg:w-80 space-y-4">
               <div className="rounded-lg border bg-card p-6">
                 <div className="text-center space-y-2">
-                  <div className="text-3xl font-bold">{project.budgetAbc}</div>
+                  <div className="text-3xl font-bold">{enhancedProject.budgetAbc}</div>
                   <div className="text-sm text-muted-foreground">Total Budget (ABC)</div>
                 </div>
                 <Separator className="my-4" />
                 <div className="space-y-3">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Submission Due:</span>
-                    <span className="font-medium">{project.submissionDeadline}</span>
+                    <span className="font-medium">{enhancedProject.submissionDeadline}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Duration:</span>
-                    <span className="font-medium">{project.projectDuration}</span>
+                    <span className="font-medium">{enhancedProject.projectDuration}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Location:</span>
-                    <span className="font-medium">{project.areaOfDelivery}</span>
+                    <span className="font-medium">{enhancedProject.areaOfDelivery}</span>
                   </div>
                 </div>
               </div>
@@ -408,19 +479,19 @@ export default function ProjectDetailPage() {
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
-            <OverviewTab project={project} />
+            <OverviewTab project={enhancedProject} />
           </TabsContent>
 
           <TabsContent value="documents" className="space-y-6">
-            <DocumentsTab project={project} />
+            <DocumentsTab project={enhancedProject} />
           </TabsContent>
 
           <TabsContent value="timeline" className="space-y-6">
-            <TimelineTab project={project} />
+            <TimelineTab project={enhancedProject} />
           </TabsContent>
 
           <TabsContent value="contact" className="space-y-6">
-            <ContactTab project={project} />
+            <ContactTab project={enhancedProject} />
           </TabsContent>
         </Tabs>
       </div>

@@ -343,7 +343,7 @@ export default function Home() {
             <div className="md:col-span-1">
                <h4 className="font-semibold mb-4">Platform</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="/projects" className="hover:text-white">Project Finder</a></li>
+                <li><a href="/login" className="hover:text-white">Project Finder</a></li>
                 <li><span className="text-gray-500">Bidding Documents (Coming Soon)</span></li>
                 <li><span className="text-gray-500">Avatar Agents (Coming Soon)</span></li>
               </ul>

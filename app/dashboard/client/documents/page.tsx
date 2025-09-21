@@ -131,7 +131,7 @@ export default function DocumentsPage() {
         <Breadcrumb>
           <BreadcrumbList>
               <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="/client/dashboard">QFindr</BreadcrumbLink>
+                <BreadcrumbLink href="/dashboard/client">QFindr</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>

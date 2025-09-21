@@ -373,7 +373,7 @@ export function DataTable({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-32">
                 <DropdownMenuItem asChild>
-                  <Link href={`/project/${row.original.id}`}>
+                  <Link href={`/dashboard/client/projects/${row.original.id}`}>
                     <Eye className="h-4 w-4 mr-2" />
                     View Details
                   </Link>
