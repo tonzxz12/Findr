@@ -110,7 +110,7 @@ export default function Page() {
                   <div>
                     <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Client Dashboard</h1>
                     <p className="text-lg text-gray-600 dark:text-gray-300 mt-1">
-                      Welcome back, <span className="font-semibold text-slate-600 dark:text-slate-400">{currentUser?.name || 'User'}</span>
+                      Welcome back, <span className="font-semibold text-slate-600 dark:text-slate-400">{currentUser?.fullName || 'User'}</span>
                     </p>
                   </div>
                 </div>

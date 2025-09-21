@@ -1,7 +1,11 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Company, User } from '../db/central-schema';
+import { clients, users } from '../db/migrations/schema';
+import type { InferSelectModel } from 'drizzle-orm';
+
+type Company = InferSelectModel<typeof clients>;
+type User = InferSelectModel<typeof users>;
 
 interface TenantContextType {
   currentCompany: Company | null;

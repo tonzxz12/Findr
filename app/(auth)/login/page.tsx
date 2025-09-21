@@ -34,7 +34,7 @@ export default function LoginPage() {
                 <div className="space-y-1">
                   <p className="font-medium text-foreground">Discover PhilGEPS Projects</p>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    AI automatically finds and matches projects to your company's capabilities and expertise
+                    AI automatically finds and matches projects to your company&apos;s capabilities and expertise
                   </p>
                 </div>
               </div>

@@ -37,7 +37,7 @@ export default function RegisterPage() {
               <div className="rounded-lg border bg-background/50 p-6">
                 <h3 className="font-semibold mb-3 text-foreground">🤖 AI-Powered Discovery</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Our advanced AI analyzes PhilGEPS projects and matches them to your company's capabilities.
+                  Our advanced AI analyzes PhilGEPS projects and matches them to your company&apos;s capabilities.
                 </p>
               </div>
               

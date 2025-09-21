@@ -28,10 +28,7 @@ import {
   Shield,
   Database,
   Bot,
-  Mail,
-  Key,
-  Globe,
-  Palette
+
 } from "lucide-react"
 
 export default function SettingsPage() {

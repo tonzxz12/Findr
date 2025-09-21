@@ -12,22 +12,12 @@ import {
   Calendar, 
   DollarSign, 
   Search, 
-  Clock,
   MapPin,
-  Plus,
   Eye,
-  Edit,
   Trash2,
-  Filter,
-  SortAsc,
   MoreHorizontal,
   Download,
-  Grid3X3,
-  BarChart3,
-  ChevronDown,
-  ChevronUp,
   ArrowUpDown,
-  FileText,
   RefreshCw,
   X
 } from "lucide-react"
@@ -55,7 +45,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {

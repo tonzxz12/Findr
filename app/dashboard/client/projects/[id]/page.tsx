@@ -10,38 +10,16 @@ import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
 import { 
   Building2, 
-  Calendar, 
-  DollarSign, 
-  FileText, 
-  Users, 
   Clock, 
-  MapPin,
-  Phone,
-  Mail,
   Globe,
   Download,
-  Edit,
   Share2,
   AlertCircle,
   CheckCircle2,
   Timer,
-  Brain,
   Briefcase,
-  Shield,
   Award,
-  Target,
-  Plus,
-  Filter,
-  Search,
   ArrowLeft,
-  ExternalLink,
-  Copy,
-  Star,
-  Zap,
-  Calendar as CalendarIcon,
-  CheckCircle,
-  Circle,
-  ArrowRight
 } from "lucide-react"
 
 // Import tab components
@@ -60,74 +38,7 @@ interface Project {
   createdAt: string
 }
 
-interface EnhancedProject extends Project {
-  projectId: string
-  refId: string
-  url: string
-  procuringEntityDetails: {
-    contactPerson: string
-    email: string
-    phone: string
-    address: string
-  }
-  areaOfDelivery: string
-  latitude: number
-  longitude: number
-  procurementSummary: string
-  referenceNumber: string
-  solicitationNumber: string
-  tradeAgreement: string
-  procurementMode: string
-  classification: string
-  deliveryPeriod: string
-  description: string
-  publishAt: Date
-  closingAt: Date
-  datePublished: Date
-  lastUpdatedAt: Date
-  status: string
-  budgetAbc: string
-  projectDuration: string
-  submissionDeadline: string
-  deadline: string
-  bidOpeningDate: string
-  fundSource: string
-  deliveryTerms: string
-  paymentTerms: string
-  documents: Array<{
-    name: string
-    type: string
-    size: string
-    downloadUrl: string
-  }>
-  timeline: Array<{
-    date: string
-    event: string
-    status: string
-  }>
-  requirements: string[]
-  evaluationCriteria: Array<{
-    criterion: string
-    weight: number
-  }>
-  similarProjects: any[]
-  aiInsights: {
-    riskLevel: string
-    recommendations: string[]
-    marketAnalysis: string
-  }
-}
 
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case "open": return "bg-green-100 text-green-800 border-green-200"
-    case "closed": return "bg-red-100 text-red-800 border-red-200"
-    case "processing": return "bg-blue-100 text-blue-800 border-blue-200"
-    case "pending": return "bg-yellow-100 text-yellow-800 border-yellow-200"
-    case "awarded": return "bg-purple-100 text-purple-800 border-purple-200"
-    default: return "bg-gray-100 text-gray-800 border-gray-200"
-  }
-}
 
 const getStatusIcon = (status: string) => {
   switch (status) {

@@ -2,21 +2,14 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Users, MapPin, Clock, Building, AlertCircle, Map, Navigation, ExternalLink, Calendar } from "lucide-react"
+import { Users, MapPin, Building, AlertCircle, Map, Navigation, ExternalLink } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 
 interface Project {
   id: string
   title?: string | null
   procuringEntity?: string | null
-  procuringEntityDetails?: {
-    contactPerson?: string
-    email?: string
-    phone?: string
-    address?: string
-  }
   areaOfDelivery?: string | null
   prebidFirstVenue?: string | null
   prebidFirstDate?: Date | null
@@ -31,25 +24,8 @@ interface ContactTabProps {
 }
 
 export function ContactTab({ project }: ContactTabProps) {
-  const formatDate = (date: Date | null) => {
-    if (!date) return null
-    return new Intl.DateTimeFormat('en-PH', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }).format(new Date(date))
-  }
+ 
 
-  // Get the primary contact address for map display
-  const getPrimaryAddress = () => {
-    if (project.contacts && project.contacts.length > 0) {
-      const primaryContact = project.contacts[0]
-      if (primaryContact.address) {
-        return primaryContact.address
-      }
-    }
-    return project.areaOfDelivery || "Project Location"
-  }
 
   if (!project) {
     return (
@@ -95,45 +71,6 @@ export function ContactTab({ project }: ContactTabProps) {
                   </div>
                 </>
               )}
-
-              {project.procuringEntityDetails && (
-                <>
-                  <Separator />
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-sm">Procuring Entity Contact</h4>
-                    <div className="grid grid-cols-1 gap-3 pl-8">
-                      {project.procuringEntityDetails.contactPerson && (
-                        <div className="flex items-center gap-2">
-                          <Users className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm">{project.procuringEntityDetails.contactPerson}</span>
-                        </div>
-                      )}
-                      {project.procuringEntityDetails.email && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">📧</span>
-                          <a href={`mailto:${project.procuringEntityDetails.email}`} className="text-sm text-blue-600 hover:underline">
-                            {project.procuringEntityDetails.email}
-                          </a>
-                        </div>
-                      )}
-                      {project.procuringEntityDetails.phone && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">📞</span>
-                          <a href={`tel:${project.procuringEntityDetails.phone}`} className="text-sm text-blue-600 hover:underline">
-                            {project.procuringEntityDetails.phone}
-                          </a>
-                        </div>
-                      )}
-                      {project.procuringEntityDetails.address && (
-                        <div className="flex items-start gap-2">
-                          <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
-                          <span className="text-sm">{project.procuringEntityDetails.address}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </>
-              )}
             </div>
           ) : (
             <div className="text-center py-6">
@@ -145,52 +82,6 @@ export function ContactTab({ project }: ContactTabProps) {
           )}
         </CardContent>
       </Card>
-
-      {/* Pre-bid Conference Information */}
-      {(project.prebidFirstDate || project.prebidFirstVenue || project.prebidFirstTime) && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-muted-foreground" />
-              Pre-bid Conference
-            </CardTitle>
-            <CardDescription>
-              Mandatory pre-bid conference details
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {project.prebidFirstDate && (
-                <div className="flex items-center gap-3">
-                  <Calendar className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium text-sm">Date</p>
-                    <p className="text-sm text-muted-foreground">{formatDate(project.prebidFirstDate)}</p>
-                  </div>
-                </div>
-              )}
-              {project.prebidFirstTime && (
-                <div className="flex items-center gap-3">
-                  <Clock className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium text-sm">Time</p>
-                    <p className="text-sm text-muted-foreground">{project.prebidFirstTime}</p>
-                  </div>
-                </div>
-              )}
-            </div>
-            {project.prebidFirstVenue && (
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
-                <div>
-                  <p className="font-medium text-sm">Venue</p>
-                  <p className="text-sm text-muted-foreground">{project.prebidFirstVenue}</p>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
 
       {/* Location & Map */}
       {(project.areaOfDelivery || project.procuringEntity) && (
@@ -289,7 +180,50 @@ export function ContactTab({ project }: ContactTabProps) {
         </Card>
       )}
 
-      {/* Google Maps Features */}
+      {/* Enhanced Map Legend */}
+      {project.contacts && project.contacts.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-muted-foreground" />
+              Google Maps Features & Legend
+            </CardTitle>
+            <CardDescription>
+              Interactive Google Maps integration with contact locations
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <span>Primary Contact Location</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
+                <span>Additional Contact Locations</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span>Area of Delivery</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                <span>Project Coordinates</span>
+              </div>
+            </div>
+            <div className="p-3 bg-blue-50 rounded text-xs text-blue-800">
+              <strong>Google Maps Integration:</strong> Click on markers to view contact details and addresses. The map automatically adjusts to show all contact locations. Full Google Maps functionality including zoom, pan, and street view is available.
+            </div>
+            {!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY === 'your_google_maps_api_key_here' ? (
+              <div className="p-3 bg-yellow-50 rounded text-xs text-yellow-800 mt-2">
+                <strong>API Key Required:</strong> To enable Google Maps, add your Google Maps API key to the NEXT_PUBLIC_GOOGLE_MAPS_API_KEY environment variable in your .env file.
+              </div>
+            ) : null}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Contact Persons */}
       {project.contacts && project.contacts.length > 0 && (
         <Card>
           <CardHeader>
@@ -350,6 +284,43 @@ export function ContactTab({ project }: ContactTabProps) {
         </Card>
       )}
 
+      {/* Google Maps Features */}
+      {project.contacts && project.contacts.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-muted-foreground" />
+              Google Maps Features
+            </CardTitle>
+            <CardDescription>
+              Embedded Google Maps with location information
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <span>Primary Contact Location</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span>Project Coordinates</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span>Area of Delivery</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <ExternalLink className="w-3 h-3" />
+                <span>Open in Google Maps</span>
+              </div>
+            </div>
+            <div className="p-3 bg-blue-50 rounded text-xs text-blue-800">
+              <strong>Embedded Google Maps:</strong> No API key required! The map shows the project location based on coordinates. Click "Open in Maps" to view in full Google Maps with navigation and additional features.
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Contact Information */}
       <Card>

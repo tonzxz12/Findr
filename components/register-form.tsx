@@ -51,7 +51,7 @@ export function RegisterForm({
         email: formData.email,
         password: formData.password,
         companyName: formData.companyName,
-      });
+      }) as { success: boolean; data?: { user: any; company: any }; error?: string };
       
       if (response.success && response.data) {
         setCurrentUser(response.data.user);

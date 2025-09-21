@@ -34,23 +34,25 @@ export function LoginForm({
     try {
       // Simulate a successful login with mock data
       const mockUser = {
-        id: 1,
+        id: '1',
         email: email,
-        passwordHash: 'mock_hash', // Required by schema but not used in bypass
-        role: 'admin',
-        isActive: 'true',
-        companyId: 1,
+        passwordHash: 'mock_hash',
+        fullName: 'Mock User',
+        phone: null,
+        role: 'admin' as const,
+        isActive: true,
         lastLoginAt: null,
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
 
       const mockCompany = {
-        id: 1,
-        name: company,
-        dbName: `tenant_${company.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
-        projectUrl: 'https://mock-project.com',
-        anonKey: 'mock_anon_key',
-        createdAt: new Date(),
+        id: '1',
+        companyName: company,
+        keywords: [],
+        ownerUserId: null,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
 
       setCurrentUser(mockUser);
