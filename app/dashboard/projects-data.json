@@ -1,0 +1,470 @@
+[
+  {
+    "id": 1,
+    "title": "Procurement of Medical Equipment for DOH Hospitals",
+    "procuringEntity": "Department of Health (DOH)",
+    "abc": 25000000,
+    "parsedClosingAt": "2025-10-15T14:00:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-08-01T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "title": "Construction of School Buildings in Rural Areas",
+    "procuringEntity": "Department of Education (DepEd)",
+    "abc": 150000000,
+    "parsedClosingAt": "2025-11-20T16:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-08-02T09:30:00.000Z"
+  },
+  {
+    "id": 3,
+    "title": "IT Infrastructure Upgrade for Government Offices",
+    "procuringEntity": "Department of Information and Communications Technology (DICT)",
+    "abc": 75000000,
+    "parsedClosingAt": "2025-10-30T15:00:00.000Z",
+    "category": "IT",
+    "createdAt": "2025-08-03T11:15:00.000Z"
+  },
+  {
+    "id": 4,
+    "title": "Supply and Delivery of Agricultural Equipment",
+    "procuringEntity": "Department of Agriculture (DA)",
+    "abc": 45000000,
+    "parsedClosingAt": "2025-09-25T14:30:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-08-04T08:45:00.000Z"
+  },
+  {
+    "id": 5,
+    "title": "Road Rehabilitation Project in Metro Manila",
+    "procuringEntity": "Department of Public Works and Highways (DPWH)",
+    "abc": 200000000,
+    "parsedClosingAt": "2025-12-10T17:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-08-05T13:20:00.000Z"
+  },
+  {
+    "id": 6,
+    "title": "Consultancy Services for Environmental Impact Assessment",
+    "procuringEntity": "Department of Environment and Natural Resources (DENR)",
+    "abc": 12000000,
+    "parsedClosingAt": "2025-10-05T12:00:00.000Z",
+    "category": "Consulting",
+    "createdAt": "2025-08-06T10:30:00.000Z"
+  },
+  {
+    "id": 7,
+    "title": "Procurement of Police Vehicles and Equipment",
+    "procuringEntity": "Philippine National Police (PNP)",
+    "abc": 85000000,
+    "parsedClosingAt": "2025-11-15T15:30:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-08-07T14:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "title": "Digital Transformation Training Program",
+    "procuringEntity": "Civil Service Commission (CSC)",
+    "abc": 25000000,
+    "parsedClosingAt": "2025-09-30T16:00:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-08-08T09:15:00.000Z"
+  },
+  {
+    "id": 9,
+    "title": "Water Treatment Facility Construction",
+    "procuringEntity": "Local Water Utilities Administration (LWUA)",
+    "abc": 180000000,
+    "parsedClosingAt": "2026-01-20T14:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-08-09T11:45:00.000Z"
+  },
+  {
+    "id": 10,
+    "title": "Laboratory Equipment for Research Institutions",
+    "procuringEntity": "Department of Science and Technology (DOST)",
+    "abc": 55000000,
+    "parsedClosingAt": "2025-10-20T13:30:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-08-10T08:30:00.000Z"
+  },
+  {
+    "id": 11,
+    "title": "Maintenance of Government Buildings",
+    "procuringEntity": "Department of Public Works and Highways (DPWH)",
+    "abc": 35000000,
+    "parsedClosingAt": "2025-09-15T15:00:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-08-11T10:00:00.000Z"
+  },
+  {
+    "id": 12,
+    "title": "Educational Software and Learning Platforms",
+    "procuringEntity": "Department of Education (DepEd)",
+    "abc": 42000000,
+    "parsedClosingAt": "2025-11-05T14:30:00.000Z",
+    "category": "IT",
+    "createdAt": "2025-08-12T13:15:00.000Z"
+  },
+  {
+    "id": 13,
+    "title": "Emergency Response Equipment Procurement",
+    "procuringEntity": "Office of Civil Defense (OCD)",
+    "abc": 65000000,
+    "parsedClosingAt": "2025-10-10T16:00:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-08-13T09:45:00.000Z"
+  },
+  {
+    "id": 14,
+    "title": "Bridge Construction Project in Visayas",
+    "procuringEntity": "Department of Public Works and Highways (DPWH)",
+    "abc": 280000000,
+    "parsedClosingAt": "2026-02-15T17:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-08-14T11:30:00.000Z"
+  },
+  {
+    "id": 15,
+    "title": "Healthcare Management System Development",
+    "procuringEntity": "Department of Health (DOH)",
+    "abc": 95000000,
+    "parsedClosingAt": "2025-12-01T15:30:00.000Z",
+    "category": "IT",
+    "createdAt": "2025-08-15T14:20:00.000Z"
+  },
+  {
+    "id": 16,
+    "title": "Agricultural Research and Development Services",
+    "procuringEntity": "Department of Agriculture (DA)",
+    "abc": 38000000,
+    "parsedClosingAt": "2025-10-25T12:00:00.000Z",
+    "category": "Consulting",
+    "createdAt": "2025-08-16T10:15:00.000Z"
+  },
+  {
+    "id": 17,
+    "title": "Security Systems for Government Facilities",
+    "procuringEntity": "Department of National Defense (DND)",
+    "abc": 72000000,
+    "parsedClosingAt": "2025-11-30T13:30:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-08-17T08:45:00.000Z"
+  },
+  {
+    "id": 18,
+    "title": "Transportation Infrastructure Development",
+    "procuringEntity": "Department of Transportation (DOTr)",
+    "abc": 350000000,
+    "parsedClosingAt": "2026-03-10T16:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-08-18T13:00:00.000Z"
+  },
+  {
+    "id": 19,
+    "title": "Capacity Building Program for LGUs",
+    "procuringEntity": "Department of Interior and Local Government (DILG)",
+    "abc": 28000000,
+    "parsedClosingAt": "2025-09-20T14:30:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-08-19T09:30:00.000Z"
+  },
+  {
+    "id": 20,
+    "title": "Renewable Energy System Installation",
+    "procuringEntity": "Department of Energy (DOE)",
+    "abc": 120000000,
+    "parsedClosingAt": "2025-12-20T15:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-08-20T11:45:00.000Z"
+  },
+  {
+    "id": 21,
+    "title": "Medical Waste Management Services",
+    "procuringEntity": "Department of Health (DOH)",
+    "abc": 18000000,
+    "parsedClosingAt": "2025-10-01T12:30:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-08-21T08:15:00.000Z"
+  },
+  {
+    "id": 22,
+    "title": "Digital Archiving System Implementation",
+    "procuringEntity": "National Archives of the Philippines",
+    "abc": 45000000,
+    "parsedClosingAt": "2025-11-10T14:00:00.000Z",
+    "category": "IT",
+    "createdAt": "2025-08-22T10:30:00.000Z"
+  },
+  {
+    "id": 23,
+    "title": "School Furniture and Equipment",
+    "procuringEntity": "Department of Education (DepEd)",
+    "abc": 32000000,
+    "parsedClosingAt": "2025-09-10T13:30:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-08-23T14:45:00.000Z"
+  },
+  {
+    "id": 24,
+    "title": "Coastal Protection and Rehabilitation",
+    "procuringEntity": "Department of Environment and Natural Resources (DENR)",
+    "abc": 95000000,
+    "parsedClosingAt": "2025-12-15T16:30:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-08-24T09:00:00.000Z"
+  },
+  {
+    "id": 25,
+    "title": "Telecommunications Infrastructure Upgrade",
+    "procuringEntity": "Department of Information and Communications Technology (DICT)",
+    "abc": 180000000,
+    "parsedClosingAt": "2026-01-30T15:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-08-25T11:15:00.000Z"
+  },
+  {
+    "id": 26,
+    "title": "Research Equipment for Universities",
+    "procuringEntity": "Commission on Higher Education (CHED)",
+    "abc": 68000000,
+    "parsedClosingAt": "2025-10-15T14:30:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-08-26T08:30:00.000Z"
+  },
+  {
+    "id": 27,
+    "title": "Disaster Risk Reduction Training",
+    "procuringEntity": "National Disaster Risk Reduction and Management Council (NDRRMC)",
+    "abc": 22000000,
+    "parsedClosingAt": "2025-09-25T13:00:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-08-27T10:45:00.000Z"
+  },
+  {
+    "id": 28,
+    "title": "Airport Terminal Expansion Project",
+    "procuringEntity": "Department of Transportation (DOTr)",
+    "abc": 450000000,
+    "parsedClosingAt": "2026-04-15T17:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-08-28T13:30:00.000Z"
+  },
+  {
+    "id": 29,
+    "title": "E-Governance Platform Development",
+    "procuringEntity": "Department of Information and Communications Technology (DICT)",
+    "abc": 120000000,
+    "parsedClosingAt": "2025-12-05T15:30:00.000Z",
+    "category": "IT",
+    "createdAt": "2025-08-29T09:15:00.000Z"
+  },
+  {
+    "id": 30,
+    "title": "Agricultural Extension Services",
+    "procuringEntity": "Department of Agriculture (DA)",
+    "abc": 35000000,
+    "parsedClosingAt": "2025-10-30T12:00:00.000Z",
+    "category": "Consulting",
+    "createdAt": "2025-08-30T11:00:00.000Z"
+  },
+  {
+    "id": 31,
+    "title": "Firefighting Equipment and Vehicles",
+    "procuringEntity": "Bureau of Fire Protection (BFP)",
+    "abc": 78000000,
+    "parsedClosingAt": "2025-11-20T14:30:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-08-31T08:45:00.000Z"
+  },
+  {
+    "id": 32,
+    "title": "Public Market Rehabilitation",
+    "procuringEntity": "Department of Trade and Industry (DTI)",
+    "abc": 65000000,
+    "parsedClosingAt": "2025-10-20T16:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-09-01T10:30:00.000Z"
+  },
+  {
+    "id": 33,
+    "title": "Mental Health Program Implementation",
+    "procuringEntity": "Department of Health (DOH)",
+    "abc": 42000000,
+    "parsedClosingAt": "2025-09-15T13:30:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-09-02T14:15:00.000Z"
+  },
+  {
+    "id": 34,
+    "title": "Geographic Information System Development",
+    "procuringEntity": "Department of Environment and Natural Resources (DENR)",
+    "abc": 58000000,
+    "parsedClosingAt": "2025-11-25T15:00:00.000Z",
+    "category": "IT",
+    "createdAt": "2025-09-03T09:45:00.000Z"
+  },
+  {
+    "id": 35,
+    "title": "Prison Rehabilitation Program",
+    "procuringEntity": "Bureau of Jail Management and Penology (BJMP)",
+    "abc": 55000000,
+    "parsedClosingAt": "2025-12-10T14:00:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-09-04T11:30:00.000Z"
+  },
+  {
+    "id": 36,
+    "title": "Rural Electrification Project",
+    "procuringEntity": "Department of Energy (DOE)",
+    "abc": 220000000,
+    "parsedClosingAt": "2026-02-28T16:30:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-09-05T13:20:00.000Z"
+  },
+  {
+    "id": 37,
+    "title": "Curriculum Development Services",
+    "procuringEntity": "Department of Education (DepEd)",
+    "abc": 28000000,
+    "parsedClosingAt": "2025-10-05T12:30:00.000Z",
+    "category": "Consulting",
+    "createdAt": "2025-09-06T10:15:00.000Z"
+  },
+  {
+    "id": 38,
+    "title": "Coastal Highway Development",
+    "procuringEntity": "Department of Public Works and Highways (DPWH)",
+    "abc": 380000000,
+    "parsedClosingAt": "2026-03-20T17:00:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-09-07T08:30:00.000Z"
+  },
+  {
+    "id": 39,
+    "title": "Digital Payment System Implementation",
+    "procuringEntity": "Department of Finance (DOF)",
+    "abc": 85000000,
+    "parsedClosingAt": "2025-11-30T15:30:00.000Z",
+    "category": "IT",
+    "createdAt": "2025-09-08T14:45:00.000Z"
+  },
+  {
+    "id": 40,
+    "title": "Agricultural Machinery Procurement",
+    "procuringEntity": "Department of Agriculture (DA)",
+    "abc": 92000000,
+    "parsedClosingAt": "2025-10-25T13:30:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-09-09T09:00:00.000Z"
+  },
+  {
+    "id": 41,
+    "title": "Urban Planning Consultancy",
+    "procuringEntity": "Housing and Urban Development Coordinating Council (HUDCC)",
+    "abc": 35000000,
+    "parsedClosingAt": "2025-09-30T14:00:00.000Z",
+    "category": "Consulting",
+    "createdAt": "2025-09-10T11:15:00.000Z"
+  },
+  {
+    "id": 42,
+    "title": "Maritime Security Equipment",
+    "procuringEntity": "Coast Guard Philippines",
+    "abc": 110000000,
+    "parsedClosingAt": "2025-12-15T16:00:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-09-11T08:45:00.000Z"
+  },
+  {
+    "id": 43,
+    "title": "Public Library Modernization",
+    "procuringEntity": "National Library of the Philippines",
+    "abc": 48000000,
+    "parsedClosingAt": "2025-11-05T13:30:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-09-12T10:30:00.000Z"
+  },
+  {
+    "id": 44,
+    "title": "Climate Change Adaptation Program",
+    "procuringEntity": "Climate Change Commission",
+    "abc": 62000000,
+    "parsedClosingAt": "2025-10-20T15:00:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-09-13T14:20:00.000Z"
+  },
+  {
+    "id": 45,
+    "title": "Judicial Records Management System",
+    "procuringEntity": "Supreme Court of the Philippines",
+    "abc": 72000000,
+    "parsedClosingAt": "2025-12-01T14:30:00.000Z",
+    "category": "IT",
+    "createdAt": "2025-09-14T09:45:00.000Z"
+  },
+  {
+    "id": 46,
+    "title": "Wastewater Treatment Facilities",
+    "procuringEntity": "Department of Environment and Natural Resources (DENR)",
+    "abc": 160000000,
+    "parsedClosingAt": "2026-01-25T16:30:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-09-15T11:30:00.000Z"
+  },
+  {
+    "id": 47,
+    "title": "Teacher Training and Development",
+    "procuringEntity": "Department of Education (DepEd)",
+    "abc": 38000000,
+    "parsedClosingAt": "2025-10-10T13:00:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-09-16T08:15:00.000Z"
+  },
+  {
+    "id": 48,
+    "title": "Military Equipment Modernization",
+    "procuringEntity": "Department of National Defense (DND)",
+    "abc": 250000000,
+    "parsedClosingAt": "2026-02-10T17:00:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-09-17T13:45:00.000Z"
+  },
+  {
+    "id": 49,
+    "title": "Tourism Infrastructure Development",
+    "procuringEntity": "Department of Tourism (DOT)",
+    "abc": 95000000,
+    "parsedClosingAt": "2025-11-20T15:30:00.000Z",
+    "category": "Infrastructure",
+    "createdAt": "2025-09-18T10:00:00.000Z"
+  },
+  {
+    "id": 50,
+    "title": "Financial Management System Upgrade",
+    "procuringEntity": "Department of Budget and Management (DBM)",
+    "abc": 88000000,
+    "parsedClosingAt": "2025-12-05T14:00:00.000Z",
+    "category": "IT",
+    "createdAt": "2025-09-19T14:30:00.000Z"
+  },
+  {
+    "id": 51,
+    "title": "Fisheries Development Program",
+    "procuringEntity": "Bureau of Fisheries and Aquatic Resources (BFAR)",
+    "abc": 42000000,
+    "parsedClosingAt": "2025-10-15T12:30:00.000Z",
+    "category": "Services",
+    "createdAt": "2025-09-20T09:15:00.000Z"
+  },
+  {
+    "id": 52,
+    "title": "Airport Security Systems",
+    "procuringEntity": "Department of Transportation (DOTr)",
+    "abc": 135000000,
+    "parsedClosingAt": "2025-12-20T16:00:00.000Z",
+    "category": "Goods",
+    "createdAt": "2025-09-21T11:45:00.000Z"
+  }
+]

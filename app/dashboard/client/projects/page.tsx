@@ -117,109 +117,45 @@ export default function ProjectsPage() {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [showFilters, setShowFilters] = useState(false)
 
-  // Simulated data based on your schema - replace with real API call
+  // Fetch data from dashboard API
   useEffect(() => {
     const fetchProjects = async () => {
       setIsLoading(true)
       try {
-        // TODO: Replace with real API call to your database
-        // const response = await db.select().from(projects).where(eq(projects.clientId, currentClientId))
-        
-        // Simulated data with more variety
-        const mockProjects: Project[] = [
-          {
-            id: "PROJ-2814",
-            clientId: "client-1",
-            publishAt: "2024-01-15T08:00:00Z",
-            closingAt: "2024-02-15T17:00:00Z",
-            title: "Construction of New Municipal Building",
-            referenceNumber: "REF-2024-001",
-            procuringEntity: "City Government of Manila",
-            philgepsTitle: "Construction of New Municipal Building - Phase 1",
-            areaOfDelivery: "Manila, Metro Manila",
-            solicitationNumber: "SOL-2024-001",
-            tradeAgreement: "GPPB",
-            procurementMode: "Public Bidding",
-            classification: "Infrastructure",
-            category: "Construction",
-            abc: 15000000.00,
-            deliveryPeriod: "180 days",
-            bidSupplements: [],
-            documentRequestList: [],
-            datePublished: "2024-01-15T08:00:00Z",
-            lastUpdatedAt: "2024-01-15T08:00:00Z",
-            parsedClosingAt: "2024-02-15T17:00:00Z",
-            description: "Construction of a new 3-story municipal building with modern facilities",
-            prebidConferences: [],
-            prebidFirstDate: "2024-01-25",
-            prebidFirstTime: "10:00:00",
-            prebidFirstVenue: "Manila City Hall",
-            createdAt: "2024-12-18T08:00:00Z",
-            updatedAt: "2024-12-18T08:00:00Z"
-          },
-          {
-            id: "PROJ-0276",
-            clientId: "client-1",
-            publishAt: "2024-01-20T08:00:00Z",
-            closingAt: "2024-02-20T17:00:00Z",
-            title: "Supply of Office Equipment for Digital Transformation",
-            referenceNumber: "REF-2024-002",
-            procuringEntity: "Department of Education",
-            philgepsTitle: "Supply and Delivery of Office Equipment",
-            areaOfDelivery: "Quezon City, Metro Manila",
-            solicitationNumber: "SOL-2024-002",
-            tradeAgreement: "GPPB",
-            procurementMode: "Public Bidding",
-            classification: "Goods",
-            category: "Supplies",
-            abc: 2500000.00,
-            deliveryPeriod: "30 days",
-            bidSupplements: [],
-            documentRequestList: [],
-            datePublished: "2024-01-20T08:00:00Z",
-            lastUpdatedAt: "2024-01-20T08:00:00Z",
-            parsedClosingAt: "2024-02-20T17:00:00Z",
-            description: "Supply and delivery of various office equipment including computers, printers, and furniture",
-            prebidConferences: [],
-            prebidFirstDate: "2024-01-30",
-            prebidFirstTime: "14:00:00",
-            prebidFirstVenue: "DepEd Central Office",
-            createdAt: "2024-12-18T08:00:00Z",
-            updatedAt: "2024-12-18T08:00:00Z"
-          },
-          {
-            id: "PROJ-0208",
-            clientId: "client-1",
-            publishAt: "2024-01-25T08:00:00Z",
-            closingAt: "2024-01-10T17:00:00Z",
-            title: "IT Network Infrastructure Upgrade",
-            referenceNumber: "REF-2024-003",
-            procuringEntity: "Department of Science and Technology",
-            philgepsTitle: "IT Consultancy Services for Digital Transformation",
-            areaOfDelivery: "Nationwide",
-            solicitationNumber: "SOL-2024-003",
-            tradeAgreement: "GPPB",
-            procurementMode: "Alternative Methods",
-            classification: "Consulting Services",
-            category: "Services",
-            abc: 5000000.00,
-            deliveryPeriod: "120 days",
-            bidSupplements: [],
-            documentRequestList: [],
-            datePublished: "2024-01-25T08:00:00Z",
-            lastUpdatedAt: "2024-01-25T08:00:00Z",
-            parsedClosingAt: "2024-01-10T17:00:00Z",
-            description: "Consultancy services for digital transformation initiatives",
-            prebidConferences: [],
-            prebidFirstDate: "2024-02-05",
-            prebidFirstTime: "09:00:00",
-            prebidFirstVenue: "DOST Main Office",
-            createdAt: "2024-12-18T08:00:00Z",
-            updatedAt: "2024-12-18T08:00:00Z"
-          }
-        ]
-        
-        setProjects(mockProjects)
+        const response = await fetch('/api/dashboard')
+        const data = await response.json()
+        // Transform the data to match the expected Project interface
+        const transformedProjects: Project[] = data.recentProjects.map((project: any) => ({
+          id: project.id.toString(),
+          clientId: "client-1", // Default client ID
+          publishAt: project.createdAt,
+          closingAt: project.parsedClosingAt,
+          title: project.title,
+          referenceNumber: `REF-${project.id}`,
+          procuringEntity: project.procuringEntity,
+          philgepsTitle: project.title,
+          areaOfDelivery: "Nationwide",
+          solicitationNumber: `SOL-${project.id}`,
+          tradeAgreement: "GPPB",
+          procurementMode: "Public Bidding",
+          classification: project.category === "Construction" ? "Infrastructure" : "Goods",
+          category: project.category,
+          abc: project.abc,
+          deliveryPeriod: "30 days",
+          bidSupplements: [],
+          documentRequestList: [],
+          datePublished: project.createdAt,
+          lastUpdatedAt: project.createdAt,
+          parsedClosingAt: project.parsedClosingAt,
+          description: project.title,
+          prebidConferences: [],
+          prebidFirstDate: null,
+          prebidFirstTime: null,
+          prebidFirstVenue: null,
+          createdAt: project.createdAt,
+          updatedAt: project.createdAt
+        }))
+        setProjects(transformedProjects)
       } catch (error) {
         console.error('Error fetching projects:', error)
       } finally {
@@ -690,19 +626,10 @@ export default function ProjectsPage() {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem asChild>
-                              <Link href={`/dashboard/client/projects/${project.id}`}>
+                              <Link href={`/project/${project.id}`}>
                                 <Eye className="h-4 w-4 mr-2" />
                                 View Details
                               </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <Edit className="h-4 w-4 mr-2" />
-                              Edit Project
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-destructive">
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              Delete Project
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

@@ -23,7 +23,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { Switch } from "@/components/ui/switch"
-import { getAllProjects } from "@/data/projects"
 
 // QFindr application data
 const data = {
@@ -75,15 +74,46 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const router = useRouter()
   const pathname = usePathname()
-  const [projects, setProjects] = React.useState(getAllProjects())
+  const [projects, setProjects] = React.useState<any[]>([])
+  const [loading, setLoading] = React.useState(true)
   const { setOpen } = useSidebar()
+
+  // Fetch projects from dashboard API
+  React.useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('/api/dashboard')
+        const data = await response.json()
+        // Transform the data to match sidebar expectations
+        const transformedProjects = data.recentProjects.map((project: any) => ({
+          id: project.id,
+          title: project.title,
+          procuringEntity: project.procuringEntity,
+          budgetAbc: `₱${project.abc?.toLocaleString() || '0'}`,
+          submissionDeadline: new Date(project.parsedClosingAt).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+          }),
+          status: 'open' // Default status for recent projects
+        }))
+        setProjects(transformedProjects)
+      } catch (error) {
+        console.error('Error fetching projects for sidebar:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProjects()
+  }, [])
 
   const handleNavigation = (url: string) => {
     router.push(url)
   }
 
-  // Check if we're on a specific project page (projects/[id])
-  const isOnProjectDetail = pathname.startsWith('/dashboard/client/projects/') && pathname !== '/dashboard/client/projects'
+  // Check if we're on a specific project page (project/[id])
+  const isOnProjectDetail = pathname.startsWith('/project/') && pathname !== '/dashboard/client/projects'
   // Check if we're on the projects list page
   const isOnProjectsList = pathname === '/dashboard/client/projects'
   // Extract project ID from pathname if on project detail page
@@ -187,7 +217,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarGroupContent>
                 {projects.map((project) => (
                   <Link
-                    href={`/dashboard/client/projects/${project.id}`}
+                    href={`/project/${project.id}`}
                     key={project.title}
                     className={`flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0 ${
                       activeProjectId === project.id.toString()
