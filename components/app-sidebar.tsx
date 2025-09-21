@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
-import { Building2, Calendar, User, Archive, Workflow } from "lucide-react"
+import { Building2, Calendar, User, Archive, Workflow, LayoutDashboard } from "lucide-react"
 
 import { NavUser } from "@/components/nav-user"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -33,6 +33,12 @@ const data = {
     avatar: "/avatars/admin.jpg",
   },
   navMain: [
+    {
+      title: "Dashboard",
+      url: "/dashboard/client",
+      icon: LayoutDashboard,
+      isActive: false,
+    },
     {
       title: "Projects",
       url: "/dashboard/client/projects",
@@ -75,6 +81,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const handleNavigation = (url: string) => {
     router.push(url)
   }
+
+  // Check if we're on a specific project page (projects/[id])
+  const isOnProjectDetail = pathname.startsWith('/dashboard/client/projects/') && pathname !== '/dashboard/client/projects'
+  // Check if we're on the projects list page
+  const isOnProjectsList = pathname === '/dashboard/client/projects'
+  // Extract project ID from pathname if on project detail page
+  const activeProjectId = isOnProjectDetail ? pathname.split('/').pop() : null
+
+  // Control sidebar collapsed state based on route
+  React.useEffect(() => {
+    if (isOnProjectsList) {
+      setOpen(false) // Collapse sidebar to icon-only on projects list
+    } else {
+      setOpen(true) // Expand sidebar on other pages
+    }
+  }, [isOnProjectsList, setOpen])
 
   return (
     <Sidebar
@@ -145,43 +167,49 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </Sidebar>
 
       {/* This is the second sidebar */}
-      {/* We disable collapsible and let it fill remaining space */}
-      <Sidebar collapsible="none" className="hidden flex-1 md:flex overflow-x-hidden">
-        <SidebarHeader className="gap-3.5 border-b p-4">
-          <div className="flex w-full items-center justify-between">
-            <div className="text-foreground text-base font-medium">
-              {pathname.includes('/projects') ? 'Projects' : (data.navMain.find(item => item.url === pathname)?.title || "Dashboard")}
+      {/* Show when sidebar is expanded */}
+      {!isOnProjectsList && (
+        <Sidebar collapsible="none" className="flex-1 md:flex overflow-x-hidden">
+          <SidebarHeader className="gap-3.5 border-b p-4">
+            <div className="flex w-full items-center justify-between">
+              <div className="text-foreground text-base font-medium">
+                Projects
+              </div>
+              <Label className="flex items-center gap-2 text-sm">
+                <span>Unreads</span>
+                <Switch className="shadow-none" />
+              </Label>
             </div>
-            <Label className="flex items-center gap-2 text-sm">
-              <span>Unreads</span>
-              <Switch className="shadow-none" />
-            </Label>
-          </div>
-          <SidebarInput placeholder="Search Projects" />
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarGroup className="px-0">
-            <SidebarGroupContent>
-              {projects.map((project) => (
-                <Link
-                  href={`/dashboard/client/projects/${project.id}`}
-                  key={project.title}
-                  className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0"
-                >
-                  <div className="flex w-full items-center gap-2">
-                    <span className="font-medium truncate flex-1 min-w-0">{project.title}</span>{" "}
-                    <span className="ml-auto text-xs shrink-0">{project.budgetAbc}</span>
-                  </div>
-                  <span className="text-muted-foreground">{project.procuringEntity}</span>
-                  <span className="line-clamp-2 w-[260px] text-xs">
-                    Deadline: {project.submissionDeadline} • Status: {project.status}
-                  </span>
-                </Link>
-              ))}
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
+            <SidebarInput placeholder="Search Projects" />
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarGroup className="px-0">
+              <SidebarGroupContent>
+                {projects.map((project) => (
+                  <Link
+                    href={`/dashboard/client/projects/${project.id}`}
+                    key={project.title}
+                    className={`flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0 ${
+                      activeProjectId === project.id.toString()
+                        ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                        : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                    }`}
+                  >
+                    <div className="flex w-full items-center gap-2">
+                      <span className="font-medium truncate flex-1 min-w-0">{project.title}</span>{" "}
+                      <span className="ml-auto text-xs shrink-0">{project.budgetAbc}</span>
+                    </div>
+                    <span className="text-muted-foreground">{project.procuringEntity}</span>
+                    <span className="line-clamp-2 w-[260px] text-xs">
+                      Deadline: {project.submissionDeadline} • Status: {project.status}
+                    </span>
+                  </Link>
+                ))}
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+        </Sidebar>
+      )}
     </Sidebar>
   )
 }
