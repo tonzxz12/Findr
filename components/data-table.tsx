@@ -611,11 +611,11 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "var(--primary)",
+    color: "hsl(var(--muted-foreground))",
   },
   mobile: {
     label: "Mobile",
-    color: "var(--primary)",
+    color: "hsl(var(--muted-foreground))",
   },
 } satisfies ChartConfig
 

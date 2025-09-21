@@ -77,6 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [projects, setProjects] = React.useState<any[]>([])
   const [loading, setLoading] = React.useState(true)
   const [showUnreadsOnly, setShowUnreadsOnly] = React.useState(false)
+  const [searchTerm, setSearchTerm] = React.useState("")
   const { open, setOpen } = useSidebar()
 
   // Fetch projects from dashboard API
@@ -129,6 +130,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       setOpen(true) // Open sidebar to show projects on project detail pages
     }
   }, [isOnProjectsList, isOnProjectDetail, setOpen])
+
+  // Filter projects based on search term and unread filter
+  const filteredProjects = React.useMemo(() => {
+    let filtered = projects
+
+    // Apply unread filter
+    if (showUnreadsOnly) {
+      filtered = filtered.filter(project => project.unread)
+    }
+
+    // Apply search filter
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase()
+      filtered = filtered.filter(project =>
+        project.title.toLowerCase().includes(term) ||
+        project.procuringEntity.toLowerCase().includes(term) ||
+        project.budgetAbc.toLowerCase().includes(term)
+      )
+    }
+
+    return filtered
+  }, [projects, showUnreadsOnly, searchTerm])
 
   return (
     <Sidebar
@@ -216,38 +239,48 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 />
               </Label>
             </div>
-            <SidebarInput placeholder="Search Projects" />
+            <SidebarInput
+              placeholder="Search Projects"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </SidebarHeader>
           <SidebarContent className="overflow-x-hidden overflow-y-auto">
             <SidebarGroup className="px-0">
               <SidebarGroupContent>
-              {(showUnreadsOnly ? projects.filter(project => project.unread) : projects).map((project) => (
-                <Link
-                  href={`/dashboard/client/projects/${project.id}`}
-                  key={project.title}
-                  className={`flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0 relative ${
-                    activeProjectId === project.id.toString()
-                      ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-                      : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
-                  }`}
-                >
-                  <div className="flex w-full items-center gap-2">
-                    <span className="font-medium truncate flex-1 min-w-0">{project.title}</span>
-                    <div className="flex items-center gap-2 shrink-0">
-                      {project.unread && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
-                          unread
-                        </span>
-                      )}
-                      <span className="text-xs">{project.budgetAbc}</span>
+              {filteredProjects.length > 0 ? (
+                filteredProjects.map((project) => (
+                  <Link
+                    href={`/dashboard/client/projects/${project.id}`}
+                    key={project.title}
+                    className={`flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0 relative ${
+                      activeProjectId === project.id.toString()
+                        ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                        : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                    }`}
+                  >
+                    <div className="flex w-full items-center gap-2">
+                      <span className="font-medium truncate flex-1 min-w-0">{project.title}</span>
+                      <div className="flex items-center gap-2 shrink-0">
+                        {project.unread && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
+                            unread
+                          </span>
+                        )}
+                        <span className="text-xs">{project.budgetAbc}</span>
+                      </div>
                     </div>
-                  </div>
-                  <span className="text-muted-foreground">{project.procuringEntity}</span>
-                  <span className="line-clamp-2 w-[260px] text-xs">
-                    Deadline: {project.submissionDeadline} • Status: {project.status}
-                  </span>
-                </Link>
-              ))}
+                    <span className="text-muted-foreground">{project.procuringEntity}</span>
+                    <span className="line-clamp-2 w-[260px] text-xs">
+                      Deadline: {project.submissionDeadline} • Status: {project.status}
+                    </span>
+                  </Link>
+                ))
+              ) : (
+                <div className="p-4 text-center text-muted-foreground text-sm">
+                  {searchTerm ? 'No projects found matching your search.' : 'No projects available.'}
+                </div>
+              )}
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
