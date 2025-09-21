@@ -113,8 +113,7 @@ const getProjectById = (id: string) => {
       ],
       createdAt: "2024-12-18T08:00:00Z",
       updatedAt: "2024-12-19T14:30:00Z",
-      aiConfidenceScore: 87,
-      processingMethod: "Machine Learning Analysis",
+    
       contacts: [
         {
           name: "Eng. Roberto Cruz",

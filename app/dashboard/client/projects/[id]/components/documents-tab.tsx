@@ -40,12 +40,6 @@ interface Project {
     size: string
     downloadUrl: string
   }>
-  // Additional context fields
-  procurementSummary?: string
-  keyRequirements?: string
-  budgetAbc?: string
-  procurementMode?: string
-  classification?: string
 }
 
 interface DocumentsTabProps {
@@ -358,84 +352,6 @@ export function DocumentsTab({ project, attachments = [] }: DocumentsTabProps) {
 
   return (
     <div className="space-y-6">
-      {/* Project Context */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-primary" />
-            Project Overview
-          </CardTitle>
-          <CardDescription>
-            Essential project information and requirements
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {project.budgetAbc && (
-              <div className="p-3 rounded-lg border bg-muted/30">
-                <div className="text-sm font-medium text-muted-foreground">Budget</div>
-                <div className="text-lg font-bold text-primary">{project.budgetAbc}</div>
-              </div>
-            )}
-            {project.procurementMode && (
-              <div className="p-3 rounded-lg border bg-muted/30">
-                <div className="text-sm font-medium text-muted-foreground">Procurement Mode</div>
-                <div className="text-sm font-medium">{project.procurementMode}</div>
-              </div>
-            )}
-            {project.classification && (
-              <div className="p-3 rounded-lg border bg-muted/30">
-                <div className="text-sm font-medium text-muted-foreground">Classification</div>
-                <div className="text-sm font-medium">{project.classification}</div>
-              </div>
-            )}
-            <div className="p-3 rounded-lg border bg-muted/30">
-              <div className="text-sm font-medium text-muted-foreground">Documents</div>
-              <div className="text-lg font-bold text-primary">{allDocuments.length}</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Procurement Summary */}
-      {project.procurementSummary && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-muted-foreground" />
-              Procurement Summary
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {project.procurementSummary}
-            </p>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Key Requirements */}
-      {project.keyRequirements && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-muted-foreground" />
-              Key Requirements
-            </CardTitle>
-            <CardDescription>
-              Important eligibility and technical requirements for bidders
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="prose prose-sm max-w-none">
-              <pre className="whitespace-pre-wrap text-sm text-muted-foreground font-mono leading-relaxed bg-muted/30 p-4 rounded-lg">
-                {project.keyRequirements}
-              </pre>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
       {/* Documents Overview */}
       <Card>
         <CardHeader>
