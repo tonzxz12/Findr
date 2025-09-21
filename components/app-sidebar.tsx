@@ -23,6 +23,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { Switch } from "@/components/ui/switch"
+import { getAllProjects } from "@/data/projects"
 
 // QFindr application data
 const data = {
@@ -63,38 +64,12 @@ const data = {
       isActive: false,
     },
   ],
-  recentProjects: [
-    {
-      id: "1",
-      name: "Office Equipment Supply",
-      agency: "DOH Central Office",
-      budget: "₱2.5M",
-      deadline: "Dec 15, 2024",
-      status: "active",
-    },
-    {
-      id: "2",
-      name: "IT Infrastructure Modernization", 
-      agency: "DOST Regional Office",
-      budget: "₱15.8M",
-      deadline: "Jan 20, 2025",
-      status: "pending",
-    },
-    {
-      id: "3",
-      name: "Construction Materials Supply",
-      agency: "DPWH Region IV-A",
-      budget: "₱8.2M", 
-      deadline: "Nov 30, 2024",
-      status: "draft",
-    },
-  ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const router = useRouter()
   const pathname = usePathname()
-  const [projects, setProjects] = React.useState(data.recentProjects)
+  const [projects, setProjects] = React.useState(getAllProjects())
   const { setOpen } = useSidebar()
 
   const handleNavigation = (url: string) => {
@@ -104,7 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
       collapsible="icon"
-      className="overflow-hidden *:data-[sidebar=sidebar]:flex-row"
+      className="overflow-x-hidden *:data-[sidebar=sidebar]:flex-row"
       {...props}
     >
       {/* This is the first sidebar */}
@@ -171,35 +146,35 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       {/* This is the second sidebar */}
       {/* We disable collapsible and let it fill remaining space */}
-      <Sidebar collapsible="none" className="hidden flex-1 md:flex">
+      <Sidebar collapsible="none" className="hidden flex-1 md:flex overflow-x-hidden">
         <SidebarHeader className="gap-3.5 border-b p-4">
           <div className="flex w-full items-center justify-between">
             <div className="text-foreground text-base font-medium">
-              {data.navMain.find(item => item.url === pathname)?.title || "Dashboard"}
+              {pathname.includes('/projects') ? 'Projects' : (data.navMain.find(item => item.url === pathname)?.title || "Dashboard")}
             </div>
             <Label className="flex items-center gap-2 text-sm">
               <span>Unreads</span>
               <Switch className="shadow-none" />
             </Label>
           </div>
-          <SidebarInput placeholder="Type to search..." />
+          <SidebarInput placeholder="Search Projects" />
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
               {projects.map((project) => (
                 <Link
-                  href={`/projects/${project.id}`}
-                  key={project.name}
+                  href={`/dashboard/client/projects/${project.id}`}
+                  key={project.title}
                   className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0"
                 >
                   <div className="flex w-full items-center gap-2">
-                    <span className="font-medium">{project.name}</span>{" "}
-                    <span className="ml-auto text-xs">{project.budget}</span>
+                    <span className="font-medium truncate flex-1 min-w-0">{project.title}</span>{" "}
+                    <span className="ml-auto text-xs shrink-0">{project.budgetAbc}</span>
                   </div>
-                  <span className="text-muted-foreground">{project.agency}</span>
+                  <span className="text-muted-foreground">{project.procuringEntity}</span>
                   <span className="line-clamp-2 w-[260px] text-xs">
-                    Deadline: {project.deadline} • Status: {project.status}
+                    Deadline: {project.submissionDeadline} • Status: {project.status}
                   </span>
                 </Link>
               ))}
