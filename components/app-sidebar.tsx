@@ -218,7 +218,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </div>
             <SidebarInput placeholder="Search Projects" />
           </SidebarHeader>
-          <SidebarContent>
+          <SidebarContent className="overflow-x-hidden overflow-y-auto">
             <SidebarGroup className="px-0">
               <SidebarGroupContent>
               {(showUnreadsOnly ? projects.filter(project => project.unread) : projects).map((project) => (
