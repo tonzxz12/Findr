@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import { ChartAreaInteractive } from "@/components/chart-area-interactive"
 import { DataTable } from "@/components/data-table"
 import { SectionCards } from "@/components/section-cards"
@@ -12,9 +15,53 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
-import data from "../data.json"
+interface DashboardData {
+  metrics: {
+    totalProjects: number
+    activeProjects: number
+    totalBudget: number
+    completedProjects: number
+  }
+  projectsByStatus: Array<{
+    status: string
+    count: number
+  }>
+  recentProjects: Project[]
+  projectsOverTime: Array<{
+    month: string
+    count: number
+  }>
+  budgetByCategory: Array<{
+    category: string | null
+    totalBudget: number | null
+    count: number
+  }>
+  procurementModes: Array<{
+    mode: string | null
+    count: number
+  }>
+}
 
 export default function Page() {
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await fetch('/api/dashboard')
+        const data = await response.json()
+        setDashboardData(data)
+      } catch (error) {
+        console.error('Failed to fetch dashboard data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchDashboardData()
+  }, [])
+
   return (
     <>
       <header className="bg-background sticky top-0 flex shrink-0 items-center gap-2 border-b p-4">
@@ -41,9 +88,9 @@ export default function Page() {
           <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
             <SectionCards />
             <div className="px-4 lg:px-6">
-              <ChartAreaInteractive />
+              <ChartAreaInteractive projectsOverTime={dashboardData?.projectsOverTime} />
             </div>
-            <DataTable data={data} />
+            <DataTable data={dashboardData?.recentProjects || []} />
           </div>
         </div>
       </div>
