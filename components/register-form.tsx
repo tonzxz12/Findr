@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useTenant } from "@/lib/context/tenant-context";
 import { authApi } from "@/lib/api/client";
+import { LoadingScreen } from "@/components/loading-screen";
 
 export function RegisterForm({
   className,
@@ -55,7 +56,7 @@ export function RegisterForm({
       if (response.success && response.data) {
         setCurrentUser(response.data.user);
         setCurrentCompany(response.data.company);
-        router.push('/dashboard');
+        router.push('/dashboard/client');
       } else {
         setError(response.error || 'Registration failed');
       }
@@ -67,28 +68,23 @@ export function RegisterForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form onSubmit={handleSubmit}>
+    <div className={cn("flex flex-col gap-6 w-full max-w-sm mx-auto", className)} {...props}>
+      <form onSubmit={handleSubmit} className="w-full">
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-4 text-center">
             <a
-              href="#"
+              href="/"
               className="flex flex-col items-center gap-2 font-medium"
             >
-              <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+              <div className="flex size-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
                 <Building2 className="size-6" />
               </div>
-              <span className="sr-only">QFindr</span>
             </a>
-            <h1 className="text-xl font-bold">Create your account</h1>
-            <div className="text-center text-sm text-muted-foreground">
-              Start automating your bidding process today
-            </div>
-            <div className="text-center text-sm">
-              Already have an account?{" "}
-              <a href="/login" className="underline underline-offset-4 hover:text-primary">
-                Sign in
-              </a>
+            <div className="space-y-2">
+              <h1 className="text-xl font-bold tracking-tight">Create your account</h1>
+              <p className="text-sm text-muted-foreground text-balance">
+                Start discovering perfect PhilGEPS projects today
+              </p>
             </div>
           </div>
 
@@ -98,9 +94,11 @@ export function RegisterForm({
             </Alert>
           )}
 
-          <div className="flex flex-col gap-4">
+          <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="companyName">Company Name</Label>
+              <Label htmlFor="companyName" className="text-sm font-medium">
+                Company Name
+              </Label>
               <Input
                 id="companyName"
                 name="companyName"
@@ -109,11 +107,14 @@ export function RegisterForm({
                 value={formData.companyName}
                 onChange={handleChange}
                 required
+                className="w-full"
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm font-medium">
+                Email
+              </Label>
               <Input
                 id="email"
                 name="email"
@@ -122,11 +123,14 @@ export function RegisterForm({
                 value={formData.email}
                 onChange={handleChange}
                 required
+                className="w-full"
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-sm font-medium">
+                Password
+              </Label>
               <Input
                 id="password"
                 name="password"
@@ -136,11 +140,14 @@ export function RegisterForm({
                 onChange={handleChange}
                 required
                 minLength={6}
+                className="w-full"
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword" className="text-sm font-medium">
+                Confirm Password
+              </Label>
               <Input
                 id="confirmPassword"
                 name="confirmPassword"
@@ -150,6 +157,7 @@ export function RegisterForm({
                 onChange={handleChange}
                 required
                 minLength={6}
+                className="w-full"
               />
             </div>
 
@@ -160,7 +168,7 @@ export function RegisterForm({
         </div>
       </form>
       
-      <div className="text-muted-foreground text-center text-xs text-balance">
+      <div className="text-center text-xs text-muted-foreground text-balance">
         By creating an account, you agree to our{" "}
         <a href="/terms" className="underline underline-offset-4 hover:text-primary">
           Terms of Service
@@ -170,6 +178,13 @@ export function RegisterForm({
           Privacy Policy
         </a>.
       </div>
+      
+      {isLoading && (
+        <LoadingScreen 
+          message="Creating your account..." 
+          size={100} 
+        />
+      )}
     </div>
   );
 }

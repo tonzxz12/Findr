@@ -1,8 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useRequireAuth } from '@/lib/context/tenant-context';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,8 +10,6 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { dummyProjects, recentProjects } from '@/data/projectDummy';
 
 export default function Home() {
-  const { isAuthenticated, isLoading } = useRequireAuth();
-  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -37,12 +33,6 @@ export default function Home() {
   const projectsToDisplay = searchValue.trim() === '' ? recentProjects : filteredProjects;
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      router.push('/dashboard');
-    }
-  }, [isAuthenticated, isLoading, router]);
-
-  useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
@@ -55,17 +45,6 @@ export default function Home() {
   useEffect(() => {
     setHighlightedIndex(0);
   }, [projectsToDisplay]);
-
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-2 text-muted-foreground">Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 relative">
@@ -187,8 +166,11 @@ export default function Home() {
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
               <ModeToggle />
-              <Button variant="outline" size="icon" className="w-auto px-4" asChild>
+              <Button variant="outline" size="sm" asChild>
                 <a href="/login">Login</a>
+              </Button>
+              <Button size="sm" asChild>
+                <a href="/register">Get Started</a>
               </Button>
             </div>
           </div>

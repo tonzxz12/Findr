@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useTenant } from "@/lib/context/tenant-context";
 import { authApi } from "@/lib/api/client";
+import { LoadingScreen } from "@/components/loading-screen";
 
 export function LoginForm({
   className,
@@ -54,7 +55,7 @@ export function LoginForm({
 
       setCurrentUser(mockUser);
       setCurrentCompany(mockCompany);
-      router.push('/dashboard');
+      router.push('/dashboard/client');
     } catch (err) {
       setError('An error occurred during login');
     } finally {
@@ -63,28 +64,23 @@ export function LoginForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form onSubmit={handleSubmit}>
+    <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>
+      <form onSubmit={handleSubmit} className="w-full">
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-4 text-center">
             <a
-              href="#"
+              href="/"
               className="flex flex-col items-center gap-2 font-medium"
             >
-              <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+              <div className="flex size-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
                 <Building2 className="size-6" />
               </div>
-              <span className="sr-only">QFindr</span>
             </a>
-            <h1 className="text-xl font-bold">Welcome to QFindr</h1>
-            <div className="text-center text-sm text-muted-foreground">
-              AI-powered bidding document generation
-            </div>
-            <div className="text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <a href="/register" className="underline underline-offset-4 hover:text-primary">
-                Sign up
-              </a>
+            <div className="space-y-2">
+              <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>
+              <p className="text-sm text-muted-foreground">
+                Sign in to your PhilProcure AI account
+              </p>
             </div>
           </div>
 
@@ -94,9 +90,11 @@ export function LoginForm({
             </Alert>
           )}
 
-          <div className="flex flex-col gap-6">
-            <div className="grid gap-3">
-              <Label htmlFor="company">Company</Label>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="company" className="text-sm font-medium">
+                Company
+              </Label>
               <Input
                 id="company"
                 type="text"
@@ -104,10 +102,13 @@ export function LoginForm({
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
                 required
+                className="w-full"
               />
             </div>
-            <div className="grid gap-3">
-              <Label htmlFor="email">Email</Label>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium">
+                Email
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -115,10 +116,13 @@ export function LoginForm({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="w-full"
               />
             </div>
-            <div className="grid gap-3">
-              <Label htmlFor="password">Password</Label>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-sm font-medium">
+                Password
+              </Label>
               <Input
                 id="password"
                 type="password"
@@ -126,31 +130,48 @@ export function LoginForm({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="w-full"
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
           </div>
 
-          <div className="text-center">
-            <a href="/forgot-password" className="text-sm underline underline-offset-4 hover:text-primary">
+          <div className="text-center space-y-4">
+            <a href="/forgot-password" className="text-sm text-muted-foreground underline underline-offset-4 hover:text-primary">
               Forgot your password?
             </a>
+            <div className="text-sm text-muted-foreground">
+              Don&apos;t have an account?{" "}
+              <a href="/register" className="font-medium text-primary underline underline-offset-4 hover:text-primary/80">
+                Sign up
+              </a>
+            </div>
           </div>
         </div>
       </form>
       
-      <div className="text-muted-foreground text-center text-xs text-balance">
-        By signing in, you agree to our{" "}
-        <a href="/terms" className="underline underline-offset-4 hover:text-primary">
-          Terms of Service
-        </a>{" "}
-        and{" "}
-        <a href="/privacy" className="underline underline-offset-4 hover:text-primary">
-          Privacy Policy
-        </a>.
+      <div className="text-center">
+        <p className="text-xs text-muted-foreground text-balance leading-relaxed">
+          By signing in, you agree to our{" "}
+          <a href="/terms" className="underline underline-offset-4 hover:text-primary">
+            Terms of Service
+          </a>{" "}
+          and{" "}
+          <a href="/privacy" className="underline underline-offset-4 hover:text-primary">
+            Privacy Policy
+          </a>
+          .
+        </p>
       </div>
+      
+      {isLoading && (
+        <LoadingScreen 
+          message="Signing you in..." 
+          size={100} 
+        />
+      )}
     </div>
   );
 }

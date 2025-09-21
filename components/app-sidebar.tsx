@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
-import { Building2, FileText, Zap, Users, Settings, BarChart3, Search, Archive, Workflow } from "lucide-react"
+import { Building2, Calendar, User, Archive, Workflow } from "lucide-react"
 
 import { NavUser } from "@/components/nav-user"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -33,45 +33,33 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: BarChart3,
-      isActive: true,
-    },
-    {
       title: "Projects",
-      url: "/projects",
+      url: "/dashboard/client/projects",
       icon: Building2,
       isActive: false,
     },
     {
-      title: "Documents",
-      url: "/documents",
-      icon: FileText,
+      title: "Calendar",
+      url: "/dashboard/client/calendar",
+      icon: Calendar,
       isActive: false,
     },
     {
-      title: "AI Generation",
-      url: "/ai-generation",
-      icon: Zap,
+      title: "Profile",
+      url: "/dashboard/client/profile",
+      icon: User,
+      isActive: false,
+    },
+    {
+      title: "Repository",
+      url: "/dashboard/client/repository",
+      icon: Archive,
       isActive: false,
     },
     {
       title: "Workflows",
-      url: "/workflows",
+      url: "/dashboard/client/workflows",
       icon: Workflow,
-      isActive: false,
-    },
-    {
-      title: "Team",
-      url: "/team",
-      icon: Users,
-      isActive: false,
-    },
-    {
-      title: "Settings",
-      url: "/settings",
-      icon: Settings,
       isActive: false,
     },
   ],
