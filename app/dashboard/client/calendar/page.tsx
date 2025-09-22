@@ -936,7 +936,7 @@ export default function CalendarPage() {
 
                         return (
                           <div
-                            key={day}
+                            key={index}
                             className={`h-20 p-2 border rounded-lg cursor-pointer hover:bg-muted/50 transition-all duration-200 ${
                               isSelected ? 'bg-slate-100 border-slate-300 dark:bg-slate-800 dark:border-slate-600' :
                               isToday ? 'bg-slate-50 border-slate-200 dark:bg-slate-900/50 dark:border-slate-700' :
