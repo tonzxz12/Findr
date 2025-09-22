@@ -19,7 +19,8 @@ import {
   Download,
   ArrowUpDown,
   RefreshCw,
-  X
+  X,
+  Server
 } from "lucide-react"
 import {
   SidebarTrigger,
@@ -297,34 +298,28 @@ export default function ProjectsPage() {
       </header>
 
       <div className="flex flex-1 flex-col gap-6 p-6">
-        {/* Page Title and Description */}
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">PhilGEPS Projects</h1>
-              <p className="text-muted-foreground">
+      
+
+    {/* Welcome Section */}
+        <div className="bg-gradient-to-r from-gray-50 to-slate-50 dark:from-gray-900/50 dark:to-slate-900/50 border-b relative">
+          <div className="px-4 lg:px-6 py-8 md:py-12">
+            <div className="max-w-4xl">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-slate-600 rounded-xl flex items-center justify-center">
+                  <Server className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">PhilGEPS Projects  </h1>
+                  <p className="text-lg text-gray-600 dark:text-gray-300 mt-1">
                 Discover and manage Philippine government procurement opportunities tailored to your business.
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button onClick={handleRefresh} variant="outline" size="sm">
-                <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-                Refresh
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleExport}>
-                <Download className="h-4 w-4 mr-2" />
-                Export ({filteredProjects.length})
-              </Button>
-              {selectedProjects.length > 0 && (
-                <Button variant="destructive" size="sm" onClick={handleBulkDelete}>
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete ({selectedProjects.length})
-                </Button>
-              )}
+               </p>
+                </div>
+              </div>
+             
             </div>
           </div>
+         
         </div>
-
 
         {/* Filters and Search */}
         <div className="flex items-center justify-between gap-4">
